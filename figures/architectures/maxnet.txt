@@ -1,0 +1,48 @@
+sys.version 3.6.8 (default, Jan 23 2019, 18:30:36) 
+[GCC 6.3.0 20170516]
+Namespace(arg='None', batchSize=64, beta1=0.5, cropSize=128, cuda=True, dataroot='dataset', dataset='gan-city', function='print_net', hack=True, imageSize=150, lr=0.0002, manualSeed=None, ndf=64, netD='/home/mbachl/repos/dl_visualcomputing2018/assignments/assignment3/runs/Jan25_17-14-50_gpu/netD_epoch_2100.pth', netG='/home/mbachl/repos/dl_visualcomputing2018/assignments/assignment3/runs/Jan25_17-14-50_gpu/netG_epoch_2100.pth', ngf=64, niter=25, nonConditional=False, numClasses=4, numSamples=8, nz=100, outf='output.png', workers=2)
+Random Seed:  7441
+Hack: True
+Non-conditional: False
+Generator(
+  (main): Sequential(
+    (0): ConvTranspose2d(104, 1024, kernel_size=(4, 4), stride=(1, 1), bias=False)
+    (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace)
+    (3): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU(inplace)
+    (6): ConvTranspose2d(512, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (7): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (8): ReLU(inplace)
+    (9): ConvTranspose2d(256, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (10): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (11): ReLU(inplace)
+    (12): ConvTranspose2d(128, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (13): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (14): ReLU(inplace)
+    (15): ConvTranspose2d(64, 3, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (16): Tanh()
+  )
+)
+Discriminator(
+  (main): Sequential(
+    (0): Conv2d(7, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (1): LeakyReLU(negative_slope=0.2, inplace)
+    (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (3): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (4): LeakyReLU(negative_slope=0.2, inplace)
+    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (6): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (7): LeakyReLU(negative_slope=0.2, inplace)
+    (8): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (9): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (10): LeakyReLU(negative_slope=0.2, inplace)
+    (11): Conv2d(512, 1024, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (12): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (13): LeakyReLU(negative_slope=0.2, inplace)
+    (14): Conv2d(1024, 1, kernel_size=(4, 4), stride=(1, 1), bias=False)
+    (15): Sigmoid()
+  )
+  (end): Sequential()
+)

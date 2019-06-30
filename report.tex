@@ -1,0 +1,202 @@
+\documentclass[a4paper]{article}
+
+\usepackage{hyperref}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfig}
+
+\newcommand\note[2]{{\color{#1}#2}}
+\newcommand\todo[1]{{\note{red}{TODO: #1}}}
+
+\author{Group 19}
+\title{DLVC Assignment 3}
+
+\begin{document}
+
+\maketitle
+
+This report is best viewed in color. 
+
+\section{Overview}
+
+We implemented \textit{City-GAN}, a \textit{Generative Adversarial Neural Network} \citep{goodfellow_generative_2014} that can generate facades of buildings in cities it was trained on. 
+
+To achieve this, we followed these steps: 
+\begin{enumerate}
+\item We chose four cities for our analyses: Vienna, Paris, Amsterdam and Manhattan.
+\item We created a list of valid addresses in these cities.
+\item We downloaded images from Google Street View from a randomly sampled subset of these addresses in each city. We chose the altitude angle of the camera to be 20 degrees. 
+\item We filtered images which fulfilled the following criteria:
+\begin{itemize}
+\item It is possible to find a way from the left to the right edge of the image that only goes over facades and has no gaps in between.
+\item The building does not show \textit{anomalous structures}. For example, we consider construction sites as anomalous because they do not represent the typical cityscape. 
+
+\end{itemize}
+\begin{figure}[h]
+\includegraphics[width=0.49\columnwidth{}]{"paris/1 Place de Mexico, 75016".jpg}%
+\hspace{0.02\columnwidth}%
+\includegraphics[width=0.49\columnwidth{}]{"paris/1 Port de la Bourdonnais, 75007".jpg}
+\caption{Two examples of pictures that we did not include in our dataset: On the left image there are gaps in the facades, the right one is anomalous (not a facade).}
+\label{fig:example_invalid}
+\end{figure}
+
+\item After filtering we had 1000 images per city (4000 in total). 
+\item We experimented with different types of GANs and different architectures.
+\item We used another, larger dataset \citep{zamir_repo_2019} and checked whether a significantly higher number of samples improves the learning performance. This dataset consists of 500,000 facades each for Amsterdam, Washington DC, Florence, Las Vegas and Manhattan. These images are, however, not curated. The only restriction we made is that the altitude angle must be between 0 and 40 degrees. Otherwise, these images are randomly sampled from the cities with no further restrictions. 
+\end{enumerate}
+
+We tried different GAN architectures during the course of our experimentation. For all our experiments we used the following data augmentation methods: horizontal flipping with probability 0.5 as well as random cropping of approximately 85\% of the original width and height of the images. We experimented with different cropped image sizes: 64, 128 and 256 pixels in height and width. For a final image of 256 pixels, we would input an image of 300 pixels and randomly crop it to 256.
+
+\section{Regular GAN}
+
+First, we used a regular deep convolutional GAN \citep{radford_unsupervised_2015} and didn't distinguish between the different cities. The code we used we got from the official PyTorch examples \citep{pytorch_deep_2019} which implements the procedure outlined by \citet{radford_unsupervised_2015}. However, from visually inspecting the results, we concluded that the GAN has a hard time learning the data distribution. 
+
+The generator starts with a vector of multivariate gaussian noise (length 100) and continuously deconvolutes it (kernel size 4, stride 2) until it outputs the image of the final size. 
+
+The discriminator gets the image and continuously convolutes it (kernel size 4, stride 2) until it is of dimension $1\times 1 \times n_\text{channels}$. Then there is one linear layer followed by a sigmoid function that outputs whether the sample is real or fake. 
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{figures/gan.png}
+\caption{Eight random samples from the generator of the regular GAN.}
+\label{fig:gan}
+\end{figure}
+
+\autoref{fig:gan} shows the results of our generator after sufficient training iterations. We see that while its output looks like facades, the output is clearly faulty and can be easily characterized by a human as being fake. 
+
+\section{Conditional GAN 1}
+
+After realizing that a regular GAN has problems learning the data distribution we used a conditional GAN (CGAN) \citep{mirza_conditional_2014}. The rationale behind this was that if we tell the GAN which city a picture is from, it can focus on learning facades and doesn't get confused by different cities' styles. 
+The difference between a GAN and a CGAN is that the latter receives label information both in the generator and discriminator.
+As such, the discriminator has more information to distinguish between real and fake pictures, and the generator has an incentive to develop features specifically for each label.
+
+We implemented it ourselves based on the code of the regular GAN. The generator of the CGAN gets a one-hot-encoded vector of the cities alongside the multivariate Gaussian distribution and can thus consider the additional information about the city that the discriminator expects in the image generation process. For instance, when the generator is supposed to output an image of Amsterdam, it gets the vector $\begin{pmatrix}1, 0, 0, 0 \end{pmatrix}^\top$ attached to its input. Thus the input to the generator network is a vector of length 104 with our four cities (100+4). 
+
+The discriminator of the GAN proceeds as in the regular GAN and uses a convolutional neural network to process the input image. After the convolutional layers we concatenate their output with the one-hot-encoded vector of the city and pass it through a dense layer followed by a ReLU function. After that we have another dense layer followed by a sigmoid function that outputs whether the sample is real or fake.  
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{figures/daniel_net.png}
+\caption{Our first attempt at a CGAN. Each column represents one random input to the generator. The rows represent: The average of all cities, Amsterdam, Manhattan, Paris and Vienna. }
+\label{fig:daniel_net}
+\end{figure}
+
+\autoref{fig:daniel_net} shows that the results are even worse than for the regular GAN.
+
+\section{Conditional GAN with custom architecture} 
+
+After achieving suboptimal results with this CGAN architecture we tried a different approach and modified the discriminator: Instead of adding the one-hot-encoded vector with the city information after the convolution, we decided to add it as an input to each pixel in the beginning of the convolution. Thus, additional to the RGB values, each pixel also has the one-hot-encoded information of the city. For example, with four cities, each pixel has 7 color channels: 3 for the colors and 4 for the one-hot-encoded cities. 
+
+While this approach sounds wasteful because of the duplicate information that is fed into the convolutional layer, it achieved significantly better results. One possible explanation for this improvement is that by adding the city information to the input picture, we help the kernels of the convolution to work differently for each city. 
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{figures/good_hack_final.png}
+\caption{Our custom CGAN architecture. Each column represents one random input to the generator. The rows represent: The average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
+\label{fig:hack}
+\end{figure}
+
+\autoref{fig:hack} shows that the results of our custom CGAN are significantly better than with our previous attempt and are also better than the normal GAN. 
+
+\section{Influence of image size on the quality of generated images}
+
+We also tested the effect of image size on the quality of the generated images. For this, we used images with a length and width of 64, 128 and 256 pixels. Our general conclusion is that smaller image sizes improve quality: with 64 pixels \autoref{fig:smaller}, the generated facades looked good and had no or only very minor flaws. With 128 we got a larger number of artifacts and faulty images but we deemed quality to be still acceptable. With 256, we couldn't get satisfying results any longer: the generator never converged and changed its output over time when fed the same random input. Furthermore, the generator did not generalize over different cities and, when inputting an average of all cities using the input vector $\begin{pmatrix}\frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4}\end{pmatrix}^\top$---which gives equal importance to all cities---the obtained image was only noise. Thus, the generator only learned to output facades for each city but did not learn which features all cities have in common. During the course of our further experiments we only used images of resolution $128\times 128$.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\linewidth]{figures/good_hack_64.png}
+\caption{Our custom CGAN trained on images of size $64\times 64$. Each column represents one random input to the generator. The rows represent: The average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
+\label{fig:smaller}
+\end{figure}
+
+\section{Using a larger, uncurated dataset}
+
+Finally, we wanted to investigate whether a larger dataset could significantly improve the quality of generated images. For this we used a dataset of Stanford University \citep{pytorch_deep_2019} and extracted 500,000 images for the cities of Amsterdam, Washington DC, Florence, Las Vegas and Manhattan. These images are not curated, thus it is not guaranteed that they actually show facades. 
+
+We noticed that Washington DC and Las Vegas are especially problematic for our neural network.
+In Washington DC, the majority of images depict trees, and in Las Vegas there are few multi-story buildings.
+Thus we also tried training the CGAN with only these three cities, hoping this would increase the quality of learned images.
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{figures/good_hack_stanford_dataset.png}
+\caption{Our custom CGAN trained on the Stanford dataset. Each column represents one random input to the generator. The rows represent: The average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
+\label{fig:stanford_net}
+\end{figure}
+
+Generally speaking we think that the quality of the generated images is the same as the one of our own dataset \autoref{fig:stanford_net}. However, while with our dataset we only learn facades, with the Stanford dataset we also learn entire streets with building on the left and right side of the street. 
+
+\section{Traveling Between Cities}
+
+To understand if our network learns characteristics of each city, we can compare the output of the generator for the same vector with different labels.
+We show a 5-step interpolation for 3 distinct random vectors in Figure~\ref{fig:transfer}.
+We show results interpolating from Amsterdam to each one of Florence, Washington DC and Manhattan.
+Additionally, we show also results of interpolating from ``Europe'' (half Amsterdam/half Florence) to the ``US'' (a third of each American city).
+These results are from the CGAN with the uncurated dataset described in the last section.
+
+\begin{figure}[h]
+	\centering
+	\subfloat[Amsterdam$\to$Florence]{\includegraphics[width = 0.49\linewidth]{figures/amsterdam_florence/merged}\label{fig:ta}}
+	\hspace{0.01\linewidth}
+	\subfloat[Amsterdam$\to$Washington DC]{\includegraphics[width = 0.49\linewidth]{figures/amsterdam_dc/merged}\label{fig:tb}}\\
+	\subfloat[Amsterdam$\to$Manhattan]{\includegraphics[width = 0.49\linewidth]{figures/amsterdam_manhattan/merged}\label{fig:tc}}
+	\hspace{0.01\linewidth}
+	\subfloat[Europe$\to$US]{\includegraphics[width = 0.49\linewidth]{figures/europe_us/merged}\label{fig:td}} 
+	\caption{Outputs of our CGAN when interpolating between locations.
+	Each row contains one cityscape, interpolated across the locations specified in the subtitle.
+}
+	\label{fig:transfer}
+\end{figure}
+
+The first thing we notice is that the color palette of the cities is quite different.
+For example, Amsterdam is quite redish, while Florence has tones closer to beige (Figure~\ref{fig:ta}).
+Another obvious characteristic is that Washington DC has a lot of trees (Figure~\ref{fig:tb}).
+In all the examples with it, the amount of trees greatly increases when compared to Amsterdam.
+
+There are also some more nuanced changes that characterize the stylistic architectural differences between cities.
+A good example of this is show between Amsterdam and Florence: distinct roofs, with breaks between them can be seen.
+This is most noticeable in the second row of Figure~\ref{fig:ta}.
+Between Amsterdam and Manhattan there are also two strong distinctions: Manhattan has taller buildings, with more smaller windows.
+In the second row of Figure~\ref{fig:tc}, the buildings grow as the label approaches Manhattan, and in the third row the windows split into smaller windows.
+
+We also show the transition between Europe and the US.
+The US images look quite unrealistic, as they are an average between 3 cities with quite different styles.
+However, one can identify an increase of trees (Washington DC has really a lot of trees) and different angles of photography (buildings are farther from the camera in Washington DC and Las Vegas).
+Both of these differences are evident in the second row of Figure~\ref{fig:td}.
+Another good example of the Europe/US relation is in Figure~\ref{fig:skyscraperchurch}, which shows an European style church being transformed into an American style skyscraper.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.49\linewidth]{figures/europe_us/44}
+	\caption{Transition from a tall European church to an American skyscraper.}
+	\label{fig:skyscraperchurch}
+\end{figure}
+
+Another thing we can try is to experiment with subtracting stylistic features.
+We can for example subtract Manhattan's label from Amsterdam's, and intuitively that should remove typical Manhattan features from the Amsterdam image.
+Indeed, we do just that in Figure~\ref{fig:minusmanhattan}, and observe that the modern looking building in the background in Amsterdam completely disappears, after subtracting Manhattan. Also, if you subtract Manhattan, more trees appear. Apparently, in Manhattan suppresses the output of trees because there are not many there. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.49\linewidth]{figures/amsterdam_minus_manhattan}
+	\caption{Transition from Amsterdam to Amsterdam-Manhattan (This means that we set the one-hot vector with 1 for Amsterdam and -1 for Manhattan).}
+	\label{fig:minusmanhattan}
+\end{figure}
+
+Not all images obtained are realistic, and some are even quite bad.
+In Figure~\ref{fig:bad}, we show some of these bad examples.
+The transitions are in the same order as in Figure~\ref{fig:transfer}, but with only one fixed random vector instead of 3.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figures/bad/merged_names}
+	\caption{Transition from Amsterdam to each of Florence, Washington DC, and Manhattan (first 3 rows), and from Europe to the US (last row).}
+	\label{fig:bad}
+\end{figure}
+
+
+\bibliographystyle{plainnat}
+\bibliography{biblio}
+
+\end{document}

@@ -1,0 +1,392 @@
+
+\documentclass[border=8pt, multi, tikz]{standalone} 
+\usepackage{import}
+\subimport{./layers/}{init}
+\usetikzlibrary{positioning}
+\usetikzlibrary{3d} %for including external image 
+
+\def\ConvColor{rgb:yellow,5;red,2.5;white,5}
+\def\ConvTColor{rgb:yellow,2.5;red,5;white,5}
+\def\ConvReluColor{rgb:yellow,5;red,5;white,5}
+\def\PoolColor{rgb:red,1;black,0.3}
+\def\BatchNormColor{rgb:red,1;black,0.3}
+\def\ReluColor{rgb:yellow,5;red,5;white,5}
+\def\UnpoolColor{rgb:blue,2;green,1;black,0.3}
+\def\FcColor{rgb:blue,5;red,2.5;white,5}
+\def\FcReluColor{rgb:blue,5;red,5;white,4}
+\def\SoftmaxColor{rgb:magenta,5;black,7}   
+
+\newcommand{\copymidarrow}{\tikz \draw[-Stealth,line width=0.8mm,draw={rgb:blue,4;red,1;green,1;black,3}] (-0.3,0) -- ++(0.3,0);}
+
+\begin{document}
+\begin{tikzpicture}
+\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
+\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
+
+%
+%
+%
+% Generator(
+%(main): Sequential(
+%(0): ConvTranspose2d(104, 1024, kernel_size=(4, 4), stride=(1, 1), bias=False)
+%(1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(2): ReLU(inplace)
+%(3): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(5): ReLU(inplace)
+%(6): ConvTranspose2d(512, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(7): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(8): ReLU(inplace)
+%(9): ConvTranspose2d(256, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(10): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(11): ReLU(inplace)
+%(12): ConvTranspose2d(128, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(13): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(14): ReLU(inplace)
+%(15): ConvTranspose2d(64, 3, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(16): Tanh()
+%)
+%)
+
+% 0
+
+\pic[shift={ (0.8,0,0) }] at (0,0,0)
+{RightBandedBox={
+		name=Gconv0,
+		caption= ,
+		xlabel={{ 64 },},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=4,
+		width={ 7 },
+		depth=4
+	}
+};
+\pic[shift={(0,0,0)}] at (Gconv0-east) 
+{Box={
+		name=Grelu2,
+		caption= ,
+		fill=\ReluColor,
+		height=4,
+		width=1,
+		depth=4,
+		zlabel=4
+	}
+};
+
+% 3
+
+\pic[shift={ (0.8,0,0) }] at (Grelu2-east)
+{RightBandedBox={
+		name=Gconv3,
+		caption= ,
+		xlabel={{ 32 },},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=7,
+		width={ 6 },
+		depth=7
+	}
+};
+\pic[shift={(0,0,0)}] at (Gconv3-east) 
+{Box={
+		name=Grelu5,
+		caption= ,
+		fill=\ReluColor,
+		height=7,
+		zlabel=8,
+		width=1,
+		depth=7	
+	}
+};
+
+\draw [connection]  (Grelu2-east)    -- node {\midarrow} (Gconv3-west);
+
+% 6
+
+\pic[shift={ (1.2,0,0) }] at (Grelu5-east)
+{RightBandedBox={
+		name=Gconv6,
+		caption= ,
+		xlabel={{ 16 },},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=12,
+		width={ 5 },
+		depth=12
+	}
+};
+\pic[shift={(0,0,0)}] at (Gconv6-east) 
+{Box={
+		name=Grelu8,
+		caption= ,
+		fill=\ReluColor,
+		height=12,
+		zlabel=16,
+		width=1,
+		depth=12
+	}
+};
+
+\draw [connection]  (Grelu5-east)    -- node {\midarrow} (Gconv6-west);
+
+% 9
+
+\pic[shift={ (1.5,0,0) }] at (Grelu8-east)
+{RightBandedBox={
+		name=Gconv9,
+		caption= ,
+		xlabel={{ 8 }},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=20,
+		width={ 4 },
+		depth=20
+	}
+};
+\pic[shift={(0,0,0)}] at (Gconv9-east) 
+{Box={
+		name=Grelu11,
+		caption= ,
+		zlabel=32,
+		fill=\ReluColor,
+		height=20,
+		width=1,
+		depth=20
+	}
+};
+
+\draw [connection]  (Grelu8-east)    -- node {\midarrow} (Gconv9-west);
+
+% 12
+
+\pic[shift={ (2,0,0) }] at (Grelu11-east)
+{RightBandedBox={
+		name=Gconv12,
+		caption= ,
+		xlabel={{ 4 }},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=30,
+		width={ 3 },
+		depth=30
+	}
+};
+\pic[shift={(0,0,0)}] at (Gconv12-east) 
+{Box={
+		name=Grelu14,
+		caption= ,
+		fill=\ReluColor,
+		height=30,
+		zlabel=64,
+		width=1,
+		depth=30
+	}
+};
+
+\draw [connection]  (Grelu11-east)    -- node {\midarrow} (Gconv12-west);
+
+% 15
+
+\pic[shift={ (3,0,0) }] at (Grelu14-east)
+{Box={
+		name=Gconv15,
+		caption= ,
+		xlabel={{ 2 }},
+		zlabel=128,
+		fill=\ConvTColor,
+		height=50,
+		width={ 2 },
+		depth=50
+	}
+};
+
+\draw [connection]  (Grelu14-east)    -- node {\midarrow} (Gconv15-west);
+
+% TODO add tanh
+
+
+%
+%
+%
+% Discriminator(
+%(main): Sequential(
+%(0): Conv2d(7, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(1): LeakyReLU(negative_slope=0.2, inplace)
+%(2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(3): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(4): LeakyReLU(negative_slope=0.2, inplace)
+%(5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(6): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(7): LeakyReLU(negative_slope=0.2, inplace)
+%(8): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(9): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(10): LeakyReLU(negative_slope=0.2, inplace)
+%(11): Conv2d(512, 1024, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+%(12): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+%(13): LeakyReLU(negative_slope=0.2, inplace)
+%(14): Conv2d(1024, 1, kernel_size=(4, 4), stride=(1, 1), bias=False)
+%(15): Sigmoid()
+%)
+%(end): Sequential()
+%)
+
+% 0
+\pic[shift={ (0,0,0) }] at (0,-10,0)
+    {Box={
+        name=Dconv0,
+        caption= ,
+        xlabel={{ 2 }},
+        fill=\ConvColor,
+        height=50,
+        width={ 2 },
+        depth=50
+        }
+    };
+\pic[shift={(0,0,0)}] at (Dconv0-east) 
+{Box={
+		name=Drelu1,
+		caption= ,
+		fill=\ReluColor,
+		height=50,
+        zlabel=128,
+		width=1,
+		depth=50
+	}
+};
+
+% 2
+
+\pic[shift={ (2,0,0) }] at (Drelu1-east)
+{RightBandedBox={
+		name=Dconv2,
+		caption= ,
+		xlabel={{ 4 }},
+		fill=\ConvColor,
+		bandfill=\BatchNormColor,
+		height=30,
+		width={ 3 },
+		depth=30
+	}
+};
+\pic[shift={(0,0,0)}] at (Dconv2-east) 
+{Box={
+		name=Drelu4,
+		caption= ,
+		fill=\ReluColor,
+		height=30,
+		zlabel=64,
+		width=1,
+		depth=30
+	}
+};
+
+
+\draw [connection]  (Drelu1-east)    -- node {\midarrow} (Dconv2-west);
+
+% 5
+
+\pic[shift={ (1.5,0,0) }] at (Drelu4-east)
+{RightBandedBox={
+		name=Dconv5,
+		caption= ,
+		xlabel={{ 8 }},
+		fill=\ConvColor,
+		bandfill=\BatchNormColor,
+		height=20,
+		width={ 4 },
+		depth=20
+	}
+};
+\pic[shift={(0,0,0)}] at (Dconv5-east) 
+{Box={
+		name=Drelu7,
+		caption= ,
+		fill=\ReluColor,
+		height=20,
+		zlabel=32,
+		width=1,
+		depth=20
+	}
+};
+
+\draw [connection]  (Drelu4-east)    -- node {\midarrow} (Dconv5-west);
+
+% 8
+
+\pic[shift={ (1.2,0,0) }] at (Drelu7-east)
+{RightBandedBox={
+		name=Dconv8,
+		caption= ,
+		xlabel={{ 16 },},
+		fill=\ConvColor,
+		bandfill=\BatchNormColor,
+		height=12,
+		width={ 5 },
+		depth=12
+	}
+};
+\pic[shift={(0,0,0)}] at (Dconv8-east) 
+{Box={
+		name=Drelu10,
+		caption= ,
+		fill=\ReluColor,
+		height=12,
+		zlabel=16,
+		width=1,
+		depth=12
+	}
+};
+
+
+\draw [connection]  (Drelu7-east)    -- node {\midarrow} (Dconv8-west);
+
+% 11
+
+\pic[shift={ (0.8,0,0) }] at (Drelu10-east)
+{RightBandedBox={
+		name=Dconv11,
+		caption= ,
+		xlabel={{ 32 },},
+		fill=\ConvColor,
+		bandfill=\BatchNormColor,
+		height=7,
+		width={ 6 },
+		depth=7
+	}
+};
+\pic[shift={(0,0,0)}] at (Dconv11-east) 
+{Box={
+		name=Drelu13,
+		caption= ,
+		fill=\ReluColor,
+		height=7,
+		zlabel=8,
+		width=1,
+		depth=7
+	}
+};
+
+\draw [connection]  (Drelu10-east)    -- node {\midarrow} (Dconv11-west);
+
+% 14
+
+\pic[shift={(0.7,0,0)}] at (Dconv11-east) 
+    {Box={
+        name=Dconv14,
+        caption= ,
+        xlabel={{64, }},
+        zlabel=4,
+        fill=\ConvColor,
+        height=4,
+        width=7,
+        depth=4
+        }
+    };
+
+\draw [connection]  (Dconv11-east)    -- node {\midarrow} (Dconv14-west);
+
+% TODO add sigmoid
+
+\end{tikzpicture}
+\end{document}
