@@ -280,7 +280,7 @@ This works by having two separate neural networks, the generator and the discrim
 
 Commonly, \glspl{cgan} are combined with \glspl{cnn} to be able to process image data \citep{radford_unsupervised_2015}. For the generator this is done by concatenating the label with the noise vector that is fed into the generator. For the discriminator the image is processed by a regular \gls{cnn}. After the \gls{cnn} there is one (or more than one) fully connected layer, which takes as its input the output of the \gls{cnn} as well as the label. Finally the discriminator outputs its decision regarding the realness of the sample. 
 
-We present two new datasets for \glspl{gan}: both datasets consist of thousands of images of facades of buildings in various cities. Each image also has a label, which indicates the city of the building depicted. 
+We present one new dataset for \glspl{gan}: The dataset consists of thousands of images of facades of buildings in various cities. Each image also has a label, which indicates the city of the building depicted. 
 
 We show that both regular Convolutional \glspl{gan} as well as Convolutional \glspl{cgan} have significant shortcomings for our use case. We then propose a new custom architecture, which delivers higher-quality results as well as more stable convergence for our datasets. 
 
@@ -291,6 +291,8 @@ In summary, we make the following contributions:
 \item insight about the architectural features of the cities under study
 \item program code that allows practitioners to reproduce our experiments and generate similar datasets
 \end{itemize}
+
+All our code and the dataset we used are available at \url{https://github.com/muxamilian/city-gan}.
 
 \section{Overview}
 
@@ -308,9 +310,9 @@ To achieve this, we followed these steps:
 
 \end{itemize}
 \begin{figure}[h]
-\includegraphics[width=0.49\columnwidth{}]{"paris/1 Place de Mexico, 75016".jpg}%
+\includegraphics[width=0.49\columnwidth{}]{"figures/examples/1 Place de Mexico, 75016".jpg}%
 \hspace{0.015\columnwidth}%
-\includegraphics[width=0.49\columnwidth{}]{"paris/1 Port de la Bourdonnais, 75007".jpg}
+\includegraphics[width=0.49\columnwidth{}]{"figures/examples/1 Port de la Bourdonnais, 75007".jpg}
 \caption{Two examples of pictures that we did not include in our dataset: on the left image there are gaps in the facades, the right one is anomalous (not a facade).}
 \label{fig:example_invalid}
 \end{figure}
