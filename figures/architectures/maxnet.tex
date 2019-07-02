@@ -25,6 +25,85 @@
 \tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
 \tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
+
+%
+%
+% Labels
+%
+%
+\pic[shift={ (0,0,0) }] at (0,10,0)
+{Box={
+		name=labelConv,
+		caption= ,
+		xlabel={{ "Conv" },},
+		fill=\ConvColor,
+		height=2,
+		width={ 2 },
+		depth=2
+	}
+};
+\pic[shift={ (0,-1,0) }] at (labelConv-south)
+{RightBandedBox={
+		name=labelTConvBatch,
+		caption= ,
+		xlabel={{"TransposeConv+BatchNorm" },},
+		fill=\ConvTColor,
+		bandfill=\BatchNormColor,
+		height=2,
+		width={ 3 },
+		depth=2,
+	}
+};
+\pic[shift={(0,-1,0)}] at (labelTConvBatch-south) 
+{Box={
+		name=labelRelu,
+		caption= ,
+		fill=\ReluColor,
+		height=2,
+		width=1,
+		depth=2,
+		zlabel=,
+		xlabel={{"ReLU"},},
+	}
+};
+\pic[shift={ (0,-1,0) }] at (labelRelu-south)
+{Box={
+		name=labelTanh,
+		caption= ,
+		xlabel={{ "Tanh" },},
+		zlabel=,
+		fill=\TanhColor,
+		height=2,
+		width={ 1 },
+		depth=2
+	}
+};
+\pic[shift={ (0,-1,0) }] at (labelTanh-south)
+{RightBandedBox={
+		name=labelConvBatch,
+		caption= ,
+		xlabel={{ "Conv+BatchNorm" },},
+		fill=\ConvColor,
+		bandfill=\BatchNormColor,
+		height=2,
+		width={ 3 },
+		depth=2
+	}
+};
+\pic[shift={(0,-1,0)}] at (labelConvBatch-south) 
+{Box={
+		name=labelSoftmax,
+		caption= ,
+		xlabel={{ "Softmax" },},
+		zlabel=,
+		fill=\SoftmaxColor,
+		height=2,
+		width=1,
+		depth=2
+	}
+};
+
+
 %
 %
 %
