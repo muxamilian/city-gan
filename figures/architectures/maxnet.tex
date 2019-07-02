@@ -16,7 +16,7 @@
 \def\FcReluColor{rgb:blue,5;red,5;white,4}
 %\def\SoftmaxColor{rgb:magenta,5;black,9}
 \def\TanhColor{rgb:magenta,9;white,4}
-\def\SoftmaxColor{rgb:green,1}
+\def\SigmoidColor{rgb:green,1}
 
 \newcommand{\copymidarrow}{\tikz \draw[-Stealth,line width=0.8mm,draw={rgb:blue,4;red,1;green,1;black,3}] (-0.3,0) -- ++(0.3,0);}
 
@@ -25,83 +25,98 @@
 \tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
 \tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
+\node at (5,3) {\Large Generator};
 
+%\node[color=\ConvColor, opacity=0.4](x) at (-1,5){} rectangle ++(1,1);
+\node at (-1,6) [minimum width=1cm,minimum height=1cm, fill=\ConvColor, opacity=0.4](conv) {};
+\node[right=0.25cm of conv](convlabel) {\Large Convolution};
+\node[right=0.25cm of convlabel,minimum width=1cm,minimum height=1cm, fill=\ConvColor, opacity=0.6](relu) {};
+\node[right=0.25cm of relu](relulabel) {\Large ReLU};
+\node[right=0.25cm of relulabel,minimum width=1cm,minimum height=1cm, fill=\BatchNormColor, opacity=0.6](batchnorm) {};
+\node[right=0.25cm of batchnorm](batchnormlabel) {\Large Batch Norm};
+\node[right=0.25cm of batchnormlabel,minimum width=1cm,minimum height=1cm, fill=\ConvTColor, opacity=0.6](convt) {};
+\node[right=0.25cm of convt](convtlabel) {\Large Transp.~Convolution};
+\node[below=0.25cm of conv,minimum width=1cm,minimum height=1cm, fill=\TanhColor, opacity=0.6](tanh) {};
+\node[right=0.25cm of tanh](tanhlabel) {\Large tanh};
+\node[right=0.25cm of tanhlabel,minimum width=1cm,minimum height=1cm, fill=\SigmoidColor, opacity=0.6](sigmoid) {};
+\node[right=0.25cm of sigmoid](sigmoidlabel) {\Large Sigmoid};
 %
 %
 % Labels
 %
-%
-\pic[shift={ (0,0,0) }] at (0,10,0)
-{Box={
-		name=labelConv,
-		caption= ,
-		xlabel={{ "Conv" },},
-		fill=\ConvColor,
-		height=2,
-		width={ 2 },
-		depth=2
-	}
-};
-\pic[shift={ (0,-1,0) }] at (labelConv-south)
-{RightBandedBox={
-		name=labelTConvBatch,
-		caption= ,
-		xlabel={{"TransposeConv+BatchNorm" },},
-		fill=\ConvTColor,
-		bandfill=\BatchNormColor,
-		height=2,
-		width={ 3 },
-		depth=2,
-	}
-};
-\pic[shift={(0,-1,0)}] at (labelTConvBatch-south) 
-{Box={
-		name=labelRelu,
-		caption= ,
-		fill=\ReluColor,
-		height=2,
-		width=1,
-		depth=2,
-		zlabel=,
-		xlabel={{"ReLU"},},
-	}
-};
-\pic[shift={ (0,-1,0) }] at (labelRelu-south)
-{Box={
-		name=labelTanh,
-		caption= ,
-		xlabel={{ "Tanh" },},
-		zlabel=,
-		fill=\TanhColor,
-		height=2,
-		width={ 1 },
-		depth=2
-	}
-};
-\pic[shift={ (0,-1,0) }] at (labelTanh-south)
-{RightBandedBox={
-		name=labelConvBatch,
-		caption= ,
-		xlabel={{ "Conv+BatchNorm" },},
-		fill=\ConvColor,
-		bandfill=\BatchNormColor,
-		height=2,
-		width={ 3 },
-		depth=2
-	}
-};
-\pic[shift={(0,-1,0)}] at (labelConvBatch-south) 
-{Box={
-		name=labelSigmoid,
-		caption= ,
-		xlabel={{ "Sigmoid" },},
-		zlabel=,
-		fill=\SoftmaxColor,
-		height=2,
-		width=1,
-		depth=2
-	}
-};
+%\
+%\pic[shift={ (0,0,0) }] at (0,10,0)
+%{Box={
+%		name=labelConv,
+%		caption= ,
+%%		xlabel={{ "Conv" },},
+%%		zlabel={{ Conv }},
+%		fill=\ConvColor,
+%		height=2,
+%		width={ 2 },
+%		depth=2
+%	}
+%};
+%\pic[shift={ (0,-1,0) }] at (labelConv-south)
+%{RightBandedBox={
+%		name=labelTConvBatch,
+%		caption= ,
+%%		xlabel={{"TransposeConv+BatchNorm" },},
+%		fill=\ConvTColor,
+%		bandfill=\BatchNormColor,
+%		height=2,
+%		width={ 3 },
+%		depth=2,
+%	}
+%};
+%\pic[shift={(0,-1,0)}] at (labelTConvBatch-south) 
+%{Box={
+%		name=labelRelu,
+%		caption= ,
+%		fill=\ReluColor,
+%		height=2,
+%		width=1,
+%		depth=2,
+%		zlabel=,
+%%		xlabel={{"ReLU"},},
+%	}
+%};
+%\pic[shift={ (0,-1,0) }] at (labelRelu-south)
+%{Box={
+%		name=labelTanh,
+%		caption= ,
+%%		xlabel={{ "Tanh" },},
+%		zlabel=,
+%		fill=\TanhColor,
+%		height=2,
+%		width={ 1 },
+%		depth=2
+%	}
+%};
+%\pic[shift={ (0,-1,0) }] at (labelTanh-south)
+%{RightBandedBox={
+%		name=labelConvBatch,
+%		caption= ,
+%%		xlabel={{ "Conv+BatchNorm" },},
+%		fill=\ConvColor,
+%		bandfill=\BatchNormColor,
+%		height=2,
+%		width={ 3 },
+%		depth=2
+%	}
+%};
+%\pic[shift={(0,-1,0)}] at (labelConvBatch-south) 
+%{Box={
+%		name=labelSigmoid,
+%		caption= ,
+%%		xlabel={{ "Sigmoid" },},
+%		zlabel=,
+%		fill=\SoftmaxColor,
+%		height=2,
+%		width=1,
+%		depth=2
+%	}
+%};
 
 
 %
@@ -285,22 +300,35 @@
 \draw [connection]  (Grelu14-east)    -- node {\midarrow} (Gconv15-west);
 
 
+%\pic[shift={ (3,0,0) }] at (Gconv15-east)
+%{Box={
+%		name=Gtanh16,
+%		caption= ,
+%		xlabel={{ 3 },},
+%		zlabel=,
+%		fill=\ConvTColor,
+%		height=50,
+%		width={ 2 },
+%		depth=50
+%	}
+%};
+%
+%\draw [connection]  (Gconv15-east)    -- node {\midarrow} (Gtanh16-west);
+%
+%\pic[shift={ (0,0,0) }] at (Gtanh16-east)
+%{Box={
+%		name=Gfinal,
+%		caption= ,
+%		xlabel={{  },},
+%		zlabel=128,
+%		fill=\TanhColor,
+%		height=50,
+%		width={ 1 },
+%		depth=50
+%	}
+%};
+
 \pic[shift={ (3,0,0) }] at (Gconv15-east)
-{Box={
-		name=Gtanh16,
-		caption= ,
-		xlabel={{ 3 },},
-		zlabel=,
-		fill=\ConvTColor,
-		height=50,
-		width={ 2 },
-		depth=50
-	}
-};
-
-\draw [connection]  (Gconv15-east)    -- node {\midarrow} (Gtanh16-west);
-
-\pic[shift={ (0,0,0) }] at (Gtanh16-east)
 {Box={
 		name=Gfinal,
 		caption= ,
@@ -313,7 +341,7 @@
 	}
 };
 
-
+\draw [connection]  (Gconv15-east)    -- node {\midarrow} (Gfinal-west);
 
 %
 %
@@ -341,6 +369,8 @@
 %)
 
 % 0
+
+\node at (10,-13) {\Large Discriminator};
 \pic[shift={ (0,0,0) }] at (0,-10,0)
     {Box={
         name=Dconv0,
@@ -495,38 +525,50 @@
 
 \draw [connection]  (Dconv11-east)    -- node {\midarrow} (Dconv14-west);
 
+%\pic[shift={(0.7,0,0)}] at (Dconv14-east) 
+%{Box={
+%		name=Dsigmoid15,
+%		caption= ,
+%		xlabel={{ 1 },},
+%		zlabel=,
+%		fill=\ConvColor,
+%		height=2,
+%		width=2,
+%		depth=2
+%	}
+%};
+%
+%\draw [connection]  (Dconv14-east)    -- node {\midarrow} (Dsigmoid15-west);
+%
+%
+%\pic[shift={(0,0,0)}] at (Dsigmoid15-east) 
+%{Box={
+%		name=Dfinal,
+%		caption= ,
+%		xlabel={{  },},
+%		zlabel=1,
+%		fill=\SigmoidColor,
+%		height=2,
+%		width=1,
+%		depth=2
+%	}
+%};
+
 \pic[shift={(0.7,0,0)}] at (Dconv14-east) 
-{Box={
-		name=Dsigmoid15,
-		caption= ,
-		xlabel={{ 1 },},
-		zlabel=,
-		fill=\ConvColor,
-		height=2,
-		width=2,
-		depth=2
-	}
-};
-
-\draw [connection]  (Dconv14-east)    -- node {\midarrow} (Dsigmoid15-west);
-
-
-\pic[shift={(0,0,0)}] at (Dsigmoid15-east) 
 {Box={
 		name=Dfinal,
 		caption= ,
 		xlabel={{  },},
 		zlabel=1,
-		fill=\SoftmaxColor,
+		fill=\SigmoidColor,
 		height=2,
 		width=1,
 		depth=2
 	}
 };
 
+\draw [connection]  (Dconv14-east)    -- node {\midarrow} (Dfinal-west);
 
-
-% TODO add sigmoid
 
 \end{tikzpicture}
 \end{document}
