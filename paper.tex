@@ -333,7 +333,7 @@ The generator starts with a vector of multivariate gaussian noise (length 100) a
 The discriminator gets the image and continuously convolutes it (kernel size 4, stride 2) until it is of dimension $1\times 1 \times n_\text{channels}$. Then there is one linear layer followed by a sigmoid function that outputs whether the sample is real or fake. 
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{figures/gan.png}
+\includegraphics[width=\columnwidth]{figures/gan.jpg}
 \caption{Eight random samples from the generator of the regular GAN.}
 \label{fig:gan}
 \end{figure}
@@ -351,7 +351,7 @@ We implemented it ourselves based on the code of the regular GAN. The generator 
 The discriminator of the GAN proceeds as in the regular GAN and uses a convolutional neural network to process the input image. After the convolutional layers we concatenate their output with the one-hot-encoded vector of the city and pass it through a dense layer followed by a ReLU function. After that we have another dense layer followed by a sigmoid function that outputs whether the sample is real or fake.  
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{figures/daniel_net.png}
+\includegraphics[width=\columnwidth]{figures/daniel_net.jpg}
 \caption{Our first attempt at a CGAN. Each column represents one random input to the generator. The rows represent: the average of all cities, Amsterdam, Manhattan, Paris and Vienna. }
 \label{fig:daniel_net}
 \end{figure}
@@ -371,7 +371,7 @@ After achieving suboptimal results with this CGAN architecture we tried a differ
 While this approach sounds wasteful because of the duplicate information that is fed into the convolutional layer, it achieved significantly better results. One possible explanation for this improvement is that by adding the city information to the input picture, we help the kernels of the convolution to work differently for each city. 
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{figures/good_hack_final.png}
+\includegraphics[width=\columnwidth]{figures/good_hack_final.jpg}
 \caption{Our custom CGAN architecture. Each column represents one random input to the generator. The rows represent: the average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
 \label{fig:hack}
 \end{figure}
@@ -384,7 +384,7 @@ We also tested the effect of image size on the quality of the generated images. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\linewidth]{figures/good_hack_64.png}
+\includegraphics[width=0.75\linewidth]{figures/good_hack_64.jpg}
 \caption{Our custom CGAN trained on images of size $64\times 64$. Each column represents one random input to the generator. The rows represent: the average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
 \label{fig:smaller}
 \end{figure}
@@ -407,7 +407,7 @@ In Washington DC, the majority of images depict trees, and in Las Vegas there ar
 Thus we also tried training the CGAN with only these three cities, hoping this would increase the quality of learned images.
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{figures/good_hack_stanford_dataset.png}
+\includegraphics[width=\columnwidth]{figures/good_hack_stanford_dataset.jpg}
 \caption{Our custom CGAN trained on the Stanford dataset. Each column represents one random input to the generator. The rows represent: the average of all cities, Amsterdam, Manhattan, Paris and Vienna.}
 \label{fig:stanford_net}
 \end{figure}
