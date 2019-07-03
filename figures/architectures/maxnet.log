@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2018.9.28)  2 JUL 2019 21:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2018.9.28)  3 JUL 2019 11:39
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -467,7 +467,7 @@ e
 Here is how much of TeX's memory you used:
  16062 strings out of 493013
  349122 string characters out of 6135682
- 521674 words of memory out of 5000000
+ 521699 words of memory out of 5000000
  19369 multiletter control sequences out of 15000+600000
  4545 words of font info for 17 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -476,7 +476,7 @@ Here is how much of TeX's memory you used:
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on maxnet.pdf (1 page, 38639 bytes).
+Output written on maxnet.pdf (1 page, 38682 bytes).
 PDF statistics:
  23 PDF objects out of 1000 (max. 8388607)
  16 compressed objects within 1 object stream
