@@ -1,3 +1,5 @@
+This is the code for the ![City-GAN paper](https://arxiv.org/abs/1907.05280).
+
 For training run 
 
     ./gan.py --dataset gan-city --dataroot dataset --batchSize 128 --imageSize 150 --cropSize 128 --hack
