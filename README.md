@@ -1,4 +1,4 @@
-This is the code for the ![City-GAN paper](https://arxiv.org/abs/1907.05280).
+This is the code for the [City-GAN paper](https://arxiv.org/abs/1907.05280).
 
 For training run 
 
