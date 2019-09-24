@@ -9,5 +9,5 @@ If you have a GPU, add the `--cuda` option for faster training.
 You can inspect samples using `tensorboard`. The following is an example where the rows are: the average of all cities, Amsterdam, Washington D.C., Florence, Las Vegas and Manhattan. The columns are eight randomly chosen inputs to the generator. 
 ![Image of Stanford Dataset](figures/good_hack_stanford_dataset.jpg)
 
-It is also possible to transition between cities. The following images has Amsterdam on the left side and Florence on the right one.
+It is also possible to transition between cities. The following image has Amsterdam on the left side and Florence on the right one.
 ![Amsterdam to Florence](figures/amsterdam_florence/merged.jpg)
