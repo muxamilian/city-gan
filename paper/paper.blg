@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/dev/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: paper.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: biblio.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--no journal in gauthier_conditional_2015
+Warning--no number and no volume in gauthier_conditional_2015
+Warning--no number and no volume in goodfellow_generative_2014
+Warning--page numbers missing in both pages and numpages fields in goodfellow_generative_2014
+Warning--no number and no volume in mirza_conditional_2014
+Warning--page numbers missing in both pages and numpages fields in mirza_conditional_2014
+Warning--no number and no volume in radford_unsupervised_2015
+Warning--page numbers missing in both pages and numpages fields in radford_unsupervised_2015
+You've used 6 entries,
+            5727 wiz_defined-function locations,
+            1328 strings with 15756 characters,
+and the built_in function-call counts, 6070 in all, are:
+= -- 777
+> -- 235
+< -- 0
++ -- 76
+- -- 84
+* -- 432
+:= -- 650
+add.period$ -- 35
+call.type$ -- 6
+change.case$ -- 40
+chr.to.int$ -- 6
+cite$ -- 14
+duplicate$ -- 490
+empty$ -- 357
+format.name$ -- 96
+if$ -- 1418
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 16
+newline$ -- 118
+num.names$ -- 48
+pop$ -- 185
+preamble$ -- 1
+purify$ -- 94
+quote$ -- 0
+skip$ -- 156
+stack$ -- 0
+substring$ -- 363
+swap$ -- 31
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 124
+warning$ -- 8
+while$ -- 41
+width$ -- 0
+write$ -- 166
+(There were 8 warnings)

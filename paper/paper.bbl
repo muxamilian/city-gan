@@ -1,0 +1,138 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{6}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Gauthier}{Gauthier}{2015}]%
+        {gauthier_conditional_2015}
+\bibfield{author}{\bibinfo{person}{Jon Gauthier}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Conditional generative adversarial nets for
+  convolutional face generation}.
+\newblock  (\bibinfo{year}{2015}), \bibinfo{pages}{9}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Goodfellow, Pouget-Abadie, Mirza, Xu,
+  Warde-Farley, Ozair, Courville, and Bengio}{Goodfellow et~al\mbox{.}}{2014}]%
+        {goodfellow_generative_2014}
+\bibfield{author}{\bibinfo{person}{Ian~J. Goodfellow}, \bibinfo{person}{Jean
+  Pouget-Abadie}, \bibinfo{person}{Mehdi Mirza}, \bibinfo{person}{Bing Xu},
+  \bibinfo{person}{David Warde-Farley}, \bibinfo{person}{Sherjil Ozair},
+  \bibinfo{person}{Aaron Courville}, {and} \bibinfo{person}{Yoshua Bengio}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Generative {Adversarial} {Networks}}.
+\newblock \bibinfo{journal}{\emph{arXiv:1406.2661 [cs, stat]}}
+  (\bibinfo{date}{June} \bibinfo{year}{2014}).
+\newblock
+\urldef\tempurl%
+\url{http://arxiv.org/abs/1406.2661}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{arXiv: 1406.2661.}
+
+
+\bibitem[\protect\citeauthoryear{Mirza and Osindero}{Mirza and
+  Osindero}{2014}]%
+        {mirza_conditional_2014}
+\bibfield{author}{\bibinfo{person}{Mehdi Mirza} {and} \bibinfo{person}{Simon
+  Osindero}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Conditional {Generative} {Adversarial} {Nets}}.
+\newblock \bibinfo{journal}{\emph{arXiv:1411.1784 [cs, stat]}}
+  (\bibinfo{date}{Nov.} \bibinfo{year}{2014}).
+\newblock
+\urldef\tempurl%
+\url{http://arxiv.org/abs/1411.1784}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{arXiv: 1411.1784.}
+
+
+\bibitem[\protect\citeauthoryear{{Pytorch}}{{Pytorch}}{2019}]%
+        {pytorch_deep_2019}
+\bibfield{author}{\bibinfo{person}{{Pytorch}}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \bibinfo{title}{Deep {Convolution} {Generative} {Adversarial}
+  {Networks}}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://github.com/pytorch/examples/tree/master/dcgan}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{original-date: 2016-08-24T03:12:48Z.}
+
+
+\bibitem[\protect\citeauthoryear{Radford, Metz, and Chintala}{Radford
+  et~al\mbox{.}}{2015}]%
+        {radford_unsupervised_2015}
+\bibfield{author}{\bibinfo{person}{Alec Radford}, \bibinfo{person}{Luke Metz},
+  {and} \bibinfo{person}{Soumith Chintala}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Unsupervised {Representation} {Learning} with
+  {Deep} {Convolutional} {Generative} {Adversarial} {Networks}}.
+\newblock \bibinfo{journal}{\emph{arXiv:1511.06434 [cs]}} (\bibinfo{date}{Nov.}
+  \bibinfo{year}{2015}).
+\newblock
+\urldef\tempurl%
+\url{http://arxiv.org/abs/1511.06434}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{arXiv: 1511.06434.}
+
+
+\bibitem[\protect\citeauthoryear{Zamir}{Zamir}{2019}]%
+        {zamir_repo_2019}
+\bibfield{author}{\bibinfo{person}{Amir Zamir}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \bibinfo{title}{The repo of {Street} {View} {Image}, {Pose}, and 3D
+  {Cities} {Dataset}. {Used} in "{Generic} 3D {Representation} via {Pose}
+  {Estimation} and {Matching}", {ECCV}16: amir32002/3D\_Street\_View}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://github.com/amir32002/3D_Street_View}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{original-date: 2017-04-27T03:42:20Z.}
+
+
+\end{thebibliography}

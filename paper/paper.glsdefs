@@ -1,0 +1,90 @@
+\ifglsentryexists{gan}{}%
+{%
+\gls@defglossaryentry{gan}%
+{%
+name={GAN},%
+sort={GAN},%
+type={main},%
+first={Generative Adversarial Network\glsspace (GAN)},%
+firstplural={Generative Adversarial Networks\glsspace (GANs)},%
+text={GAN},%
+plural={GANs},%
+description={Generative Adversarial Network},%
+descriptionplural={Generative Adversarial Network\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Generative Adversarial Network},%
+longplural={Generative Adversarial Networks},%
+short={GAN},%
+shortplural={GANs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{cgan}{}%
+{%
+\gls@defglossaryentry{cgan}%
+{%
+name={CGAN},%
+sort={CGAN},%
+type={main},%
+first={Conditional Generative Adversarial Network\glsspace (CGAN)},%
+firstplural={Conditional Generative Adversarial Networks\glsspace (CGANs)},%
+text={CGAN},%
+plural={CGANs},%
+description={Conditional Generative Adversarial Network},%
+descriptionplural={Conditional Generative Adversarial Network\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Conditional Generative Adversarial Network},%
+longplural={Conditional Generative Adversarial Networks},%
+short={CGAN},%
+shortplural={CGANs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{cnn}{}%
+{%
+\gls@defglossaryentry{cnn}%
+{%
+name={CNN},%
+sort={CNN},%
+type={main},%
+first={Convolutional Neural Network\glsspace (CNN)},%
+firstplural={Convolutional Neural Networks\glsspace (CNNs)},%
+text={CNN},%
+plural={CNNs},%
+description={Convolutional Neural Network},%
+descriptionplural={Convolutional Neural Network\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Convolutional Neural Network},%
+longplural={Convolutional Neural Networks},%
+short={CNN},%
+shortplural={CNNs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

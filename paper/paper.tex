@@ -363,7 +363,7 @@ The discriminator of the GAN proceeds as in the regular GAN and uses a convoluti
 After achieving suboptimal results with this CGAN architecture we tried a different approach and modified the discriminator: instead of adding the one-hot-encoded vector with the city information after the convolution, we decided to add it as an input to each pixel in the beginning of the convolution. Thus, additional to the RGB values, each pixel also has the one-hot-encoded information of the city. For example, with four cities, each pixel has 7 color channels: 3 for the colors and 4 for the one-hot-encoded cities (\autoref{fig:maxnet}). 
 
 \begin{figure}
-\includegraphics[width=\columnwidth]{figures/architectures/maxnet_final.pdf}
+\includegraphics[width=\columnwidth]{figures/architectures/maxnet.pdf}
 \caption{The architecture of our neural network is inspired by \cite{pytorch_deep_2019}. The difference in our custom architecture is that labels are fed into the generator (top) as well as into the discriminator (bottom) alongside the data.}  % TODO
 \label{fig:maxnet}
 \end{figure}
@@ -391,7 +391,7 @@ We also tested the effect of image size on the quality of the generated images. 
 
 \section{Using a larger, uncurated dataset}
 
-Finally, we wanted to investigate whether a larger dataset could significantly improve the quality of generated images. For this we used a dataset of Stanford University \citep{pytorch_deep_2019} and extracted 500,000 images for the cities of Amsterdam, Washington DC, Florence, Las Vegas and Manhattan. These images are not curated, thus it is not guaranteed that they actually show facades. 
+Finally, we wanted to investigate whether a larger dataset could significantly improve the quality of generated images. For this we used a dataset of Stanford University \citep{zamir_repo_2019} and extracted 500,000 images for the cities of Amsterdam, Washington DC, Florence, Las Vegas and Manhattan. These images are not curated, thus it is not guaranteed that they actually show facades. 
 
 %\begin{figure}[h]
 %\centering
